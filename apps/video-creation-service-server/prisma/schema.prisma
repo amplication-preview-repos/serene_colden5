@@ -1,0 +1,164 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Music {
+  createdAt DateTime @default(now())
+  genre     String?
+  id        String   @id @default(cuid())
+  sourceUrl String?
+  updatedAt DateTime @updatedAt
+}
+
+model Subtitle {
+  content   String?
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  language  String?
+  updatedAt DateTime @updatedAt
+}
+
+model Visual {
+  createdAt DateTime             @default(now())
+  id        String               @id @default(cuid())
+  sourceUrl String?
+  typeField EnumVisualTypeField?
+  updatedAt DateTime             @updatedAt
+}
+
+model SoundEffect {
+  createdAt   DateTime @default(now())
+  description String?
+  id          String   @id @default(cuid())
+  sourceUrl   String?
+  updatedAt   DateTime @updatedAt
+}
+
+model Project {
+  campaign    Campaign?          @relation(fields: [campaignId], references: [id])
+  campaignId  String?
+  createdAt   DateTime           @default(now())
+  description String?
+  id          String             @id @default(cuid())
+  status      EnumProjectStatus?
+  title       String?
+  updatedAt   DateTime           @updatedAt
+}
+
+model VoiceOver {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  language  String?
+  sourceUrl String?
+  updatedAt DateTime @updatedAt
+}
+
+model Script {
+  content   String?
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  language  String?
+  updatedAt DateTime @updatedAt
+}
+
+model Campaign {
+  aspectRatio             EnumCampaignAspectRatio?
+  backgroundMusicIncluded Boolean?
+  campaignLanguage        EnumCampaignCampaignLanguage?
+  campaignName            String?
+  campaignNiche           EnumCampaignCampaignNiche?
+  campaignTone            String?
+  campaignTopic           String?
+  campaignVoice           EnumCampaignCampaignVoice?
+  createdAt               DateTime                         @default(now())
+  id                      String                           @id @default(cuid())
+  includeBackgroundMusic  Boolean?
+  includeSoundEffects     Boolean?
+  language                EnumCampaignLanguage?
+  name                    String?
+  niche                   EnumCampaignNiche?
+  projects                Project[]
+  socialAccounts          EnumCampaignSocialAccounts[]
+  socialChannels          EnumCampaignSocialChannels[]
+  soundEffectsIncluded    Boolean?
+  tone                    String?
+  topic                   String?
+  updatedAt               DateTime                         @updatedAt
+  videoAspectRatio        EnumCampaignVideoAspectRatio?
+  videoLength             EnumCampaignVideoLength?
+  videoLengthDuration     EnumCampaignVideoLengthDuration?
+  voice                   EnumCampaignVoice?
+}
+
+model User {
+  createdAt DateTime @default(now())
+  email     String?  @unique
+  firstName String?
+  id        String   @id @default(cuid())
+  lastName  String?
+  password  String
+  roles     Json
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+}
+
+enum EnumVisualTypeField {
+  Option1
+}
+
+enum EnumProjectStatus {
+  Option1
+}
+
+enum EnumCampaignAspectRatio {
+  Option1
+}
+
+enum EnumCampaignCampaignLanguage {
+  Option1
+}
+
+enum EnumCampaignCampaignNiche {
+  Option1
+}
+
+enum EnumCampaignCampaignVoice {
+  Option1
+}
+
+enum EnumCampaignLanguage {
+  Option1
+}
+
+enum EnumCampaignNiche {
+  Option1
+}
+
+enum EnumCampaignSocialAccounts {
+  Option1
+}
+
+enum EnumCampaignSocialChannels {
+  Option1
+}
+
+enum EnumCampaignVideoAspectRatio {
+  Option1
+}
+
+enum EnumCampaignVideoLength {
+  Option1
+}
+
+enum EnumCampaignVideoLengthDuration {
+  Option1
+}
+
+enum EnumCampaignVoice {
+  Option1
+}
